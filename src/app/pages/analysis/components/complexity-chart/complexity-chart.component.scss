@@ -1,0 +1,39 @@
+.chart-container {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 1.5rem;
+
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h3 {
+      font-size: 1.25rem;
+      margin: 0;
+      color: #ffffff;
+    }
+
+    .complexity-score {
+      text-align: right;
+
+      .score {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #4facfe;
+      }
+
+      .level {
+        font-size: 0.875rem;
+        color: #8a8aa3;
+      }
+    }
+  }
+
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+}

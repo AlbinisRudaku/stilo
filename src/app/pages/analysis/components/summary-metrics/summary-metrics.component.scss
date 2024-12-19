@@ -1,0 +1,52 @@
+.metrics-container {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 1.5rem;
+
+  h3 {
+    font-size: 1.25rem;
+    margin: 0 0 1.5rem 0;
+    color: #ffffff;
+  }
+
+  .metrics-grid {
+    display: grid;
+    gap: 1rem;
+
+    .metric-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 0.5rem;
+      padding: 1rem;
+
+      .metric-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+
+        .metric-title {
+          color: #ffffff;
+          font-weight: 500;
+        }
+
+        .score-circle {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          font-size: 0.875rem;
+          color: #ffffff;
+        }
+      }
+
+      .interpretation {
+        margin: 0;
+        color: #8a8aa3;
+        font-size: 0.875rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,374 @@
+<div class="analysis-container">
+  <header class="analysis-header">
+    <div class="title-section">
+      <h1>Analysis Results</h1>
+      <button class="new-analysis-btn" (click)="analyzeNewDocument()">
+        <i class="fas fa-upload"></i>
+        New Analysis
+      </button>
+    </div>
+    <div class="metadata">
+      <span><i class="fas fa-file-pdf"></i>{{ analysisData.metadata.filename }}</span>
+      <span><i class="fas fa-file-alt"></i>{{ analysisData.metadata.page_count }} pages</span>
+      <span><i class="fas fa-clock"></i>{{ analysisData.metadata.timestamp | date:'short' }}</span>
+    </div>
+  </header>
+
+  <div class="metrics-grid">
+    <!-- Complexity Score Card -->
+    <div class="metric-card summary-card">
+      <div class="card-header">
+        <h3><i class="fas fa-chart-line"></i>Complexity Score</h3>
+      </div>
+      <div class="summary-metrics">
+        <div class="summary-metric">
+          <div class="metric-score">{{ analysisData.analysis.style_metrics.complexity.score }}</div>
+          <div class="metric-name">
+            Overall Score
+            <app-tooltip [content]="getMetricTooltips().complexity['score']"></app-tooltip>
+          </div>
+          <div class="metric-detail">{{ analysisData.analysis.style_metrics.complexity.level }} Complexity</div>
+        </div>
+        <div class="summary-metric">
+          <div class="metric-score">{{ (analysisData.analysis.style_metrics.complexity.components.vocabulary_contribution * 100).toFixed(1) }}%</div>
+          <div class="metric-name">
+            Vocabulary
+            <app-tooltip [content]="getMetricTooltips().complexity['vocabulary_contribution']"></app-tooltip>
+          </div>
+        </div>
+        <div class="summary-metric">
+          <div class="metric-score">{{ (analysisData.analysis.style_metrics.complexity.components.syntax_contribution * 100).toFixed(1) }}%</div>
+          <div class="metric-name">
+            Syntax
+            <app-tooltip [content]="getMetricTooltips().complexity['syntax_contribution']"></app-tooltip>
+          </div>
+        </div>
+        <div class="summary-metric">
+          <div class="metric-score">{{ (analysisData.analysis.style_metrics.complexity.components.readability_contribution * 100).toFixed(1) }}%</div>
+          <div class="metric-name">
+            Readability
+            <app-tooltip [content]="getMetricTooltips().complexity['readability_contribution']"></app-tooltip>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Writing Style Card -->
+    <div class="metric-card summary-card">
+      <div class="card-header">
+        <h3><i class="fas fa-pen-fancy"></i>Writing Style Analysis</h3>
+      </div>
+      <div class="summary-metrics">
+        <div class="summary-metric">
+          <div class="metric-score">{{ analysisData.analysis.writing_patterns.vocabulary_usage }}</div>
+          <div class="metric-name">
+            Vocabulary Usage
+            <app-tooltip [content]="getMetricTooltips().writing_patterns['vocabulary_usage']"></app-tooltip>
+          </div>
+        </div>
+        <div class="summary-metric">
+          <div class="metric-score">{{ analysisData.analysis.writing_patterns.sentence_structure }}</div>
+          <div class="metric-name">
+            Sentence Structure
+            <app-tooltip [content]="getMetricTooltips().writing_patterns['sentence_structure']"></app-tooltip>
+          </div>
+        </div>
+        <div class="summary-metric">
+          <div class="metric-score">{{ analysisData.analysis.writing_patterns.text_organization }}</div>
+          <div class="metric-name">
+            Text Organization
+            <app-tooltip [content]="getMetricTooltips().writing_patterns['text_organization']"></app-tooltip>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Metrics Card -->
+    <div class="metric-card summary-card">
+      <div class="card-header">
+        <h3><i class="fas fa-chart-bar"></i>Summary Metrics</h3>
+      </div>
+      <div class="summary-metrics">
+        <div class="summary-metric">
+          <div class="metric-score">{{ analysisData.analysis.summary_metrics.readability.score }}</div>
+          <div class="metric-name">
+            Readability
+            <app-tooltip [content]="getMetricTooltips().summary_metrics['readability_score']"></app-tooltip>
+          </div>
+        </div>
+        <div class="summary-metric">
+          <div class="metric-score">{{ analysisData.analysis.summary_metrics.vocabulary.score.toFixed(2) }}</div>
+          <div class="metric-name">
+            Vocabulary
+            <app-tooltip [content]="getMetricTooltips().summary_metrics['vocabulary_score']"></app-tooltip>
+          </div>
+          <div class="metric-detail">{{ analysisData.analysis.summary_metrics.vocabulary.interpretation }}</div>
+        </div>
+        <div class="summary-metric">
+          <div class="metric-score">{{ analysisData.analysis.summary_metrics.structure.score.toFixed(2) }}</div>
+          <div class="metric-name">
+            Structure
+            <app-tooltip [content]="getMetricTooltips().summary_metrics['structure_score']"></app-tooltip>
+          </div>
+          <div class="metric-detail">{{ analysisData.analysis.summary_metrics.structure.interpretation }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="analysis-card structural-metrics">
+    <div class="card-header">
+      <h3><i class="fas fa-layer-group"></i>Structural Metrics</h3>
+    </div>
+    <div class="structural-content">
+      <div class="primary-metrics">
+        <div class="metric-box">
+          <div class="metric-value">{{ analysisData.features.structural.avg_paragraph_length }}</div>
+          <div class="metric-label">
+            Average Paragraph Length
+            <app-tooltip [content]="getMetricTooltips().structural['avg_paragraph_length']"></app-tooltip>
+          </div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-value">{{ analysisData.features.structural.paragraph_count }}</div>
+          <div class="metric-label">
+            Paragraph Count
+            <app-tooltip [content]="getMetricTooltips().structural['paragraph_count']"></app-tooltip>
+          </div>
+        </div>
+      </div>
+      <div class="secondary-metrics">
+        <div class="metric-item">
+          <div class="metric-value">{{ (analysisData.features.structural.text_density * 100).toFixed(1) }}%</div>
+          <div class="metric-label">
+            Text Density
+            <app-tooltip [content]="getMetricTooltips().structural['text_density']"></app-tooltip>
+          </div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-value">{{ (analysisData.features.structural.avg_sentences_per_paragraph).toFixed(1) }}</div>
+          <div class="metric-label">
+            Avg. Sentences per Paragraph
+            <app-tooltip [content]="getMetricTooltips().structural['avg_sentences_per_paragraph']"></app-tooltip>
+          </div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-value">{{ (analysisData.features.structural.whitespace_ratio * 100).toFixed(1) }}%</div>
+          <div class="metric-label">
+            Whitespace Ratio
+            <app-tooltip [content]="getMetricTooltips().structural['whitespace_ratio']"></app-tooltip>
+          </div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-value">{{ analysisData.features.structural.structure_consistency }}</div>
+          <div class="metric-label">
+            Structure Consistency
+            <app-tooltip [content]="getMetricTooltips().structural['structure_consistency']"></app-tooltip>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detailed-metrics-container">
+    <!-- Lexical Analysis Panel -->
+    <div class="metrics-panel lexical-panel">
+      <div class="panel-header">
+        <h3>Lexical Analysis</h3>
+        <div class="header-icon">
+          <i class="fas fa-book"></i>
+        </div>
+      </div>
+      <div class="panel-content">
+        <div class="metric-row" *ngFor="let item of getTableData().lexical">
+          <div class="metric-info">
+            <span class="metric-label">
+              {{ item.label }}
+              <app-tooltip [content]="getMetricTooltips().lexical[item.key]"></app-tooltip>
+            </span>
+            <span class="metric-value">{{ item.value }}</span>
+          </div>
+          <div class="metric-progress">
+            <div class="progress-bar" [style.width]="getBarWidth(item.value)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Syntactic Analysis Panel -->
+    <div class="metrics-panel syntactic-panel">
+      <div class="panel-header">
+        <h3>Syntactic Analysis</h3>
+        <div class="header-icon">
+          <i class="fas fa-code-branch"></i>
+        </div>
+      </div>
+      <div class="panel-content">
+        <div class="metric-row" *ngFor="let item of getTableData().syntactic">
+          <div class="metric-info">
+            <span class="metric-label">
+              {{ item.label }}
+              <app-tooltip [content]="getMetricTooltips().syntactic[item.key]"></app-tooltip>
+            </span>
+            <span class="metric-value">{{ item.value }}</span>
+          </div>
+          <div class="metric-progress">
+            <div class="progress-bar" [style.width]="getBarWidth(item.value)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Readability Analysis Panel -->
+    <div class="metrics-panel readability-panel">
+      <div class="panel-header">
+        <h3>Readability Analysis</h3>
+        <div class="header-icon">
+          <i class="fas fa-glasses"></i>
+        </div>
+      </div>
+      <div class="panel-content">
+        <div class="metric-row" *ngFor="let item of getTableData().readability">
+          <div class="metric-info">
+            <span class="metric-label">
+              {{ item.label }}
+              <app-tooltip [content]="getMetricTooltips().readability[item.key]"></app-tooltip>
+            </span>
+            <span class="metric-value">{{ item.value }}</span>
+          </div>
+          <div class="metric-progress">
+            <div class="progress-bar" [style.width]="getBarWidth(item.value)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parts of Speech Panel -->
+    <div class="metrics-panel speech-panel">
+      <div class="panel-header">
+        <h3>Parts of Speech Distribution</h3>
+        <div class="header-icon">
+          <i class="fas fa-paragraph"></i>
+        </div>
+      </div>
+      <div class="panel-content">
+        <div class="metric-row" *ngFor="let item of getSpeechData()">
+          <div class="metric-info">
+            <span class="metric-label">{{ item.label }}</span>
+            <span class="metric-value">{{ (item.value * 100).toFixed(1) }}%</span>
+          </div>
+          <div class="metric-progress">
+            <div class="progress-bar" [style.width]="getBarWidth(item.value * 100)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detailed-features">
+    <!-- Lexical Features Details -->
+    <div class="analysis-card">
+      <div class="card-header">
+        <h3><i class="fas fa-code-branch"></i>Detailed Syntactic Features</h3>
+      </div>
+      <div class="features-grid">
+        <!-- Dependency Relations -->
+        <div class="feature-section">
+          <h4>Dependency Relations</h4>
+          <div class="dep-grid">
+            <div class="feature-item" *ngFor="let item of getDependencyData()">
+              <span class="dep-label">{{ item.label }}</span>
+              <span class="dep-value">{{ (item.value * 100).toFixed(1) }}%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Syntactic Metrics -->
+        <div class="feature-section">
+          <h4>Sentence Structure</h4>
+          <div class="metrics-grid-detailed">
+            <div class="metric-item">
+              <div class="metric-label">
+                Average Sentence Length
+                <app-tooltip [content]="getMetricTooltips().syntactic['avg_sentence_length']"></app-tooltip>
+              </div>
+              <div class="metric-value">{{ analysisData.features.syntactic.avg_sentence_length.toFixed(1) }}</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">
+                Sentence Complexity
+                <app-tooltip [content]="getMetricTooltips().syntactic['sentence_complexity']"></app-tooltip>
+              </div>
+              <div class="metric-value">{{ analysisData.features.syntactic.sentence_complexity.toFixed(1) }}</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">
+                Subordinate Clause Ratio
+                <app-tooltip [content]="getMetricTooltips().syntactic['subordinate_clause_ratio']"></app-tooltip>
+              </div>
+              <div class="metric-value">{{ (analysisData.features.syntactic.subordinate_clause_ratio * 100).toFixed(1) }}%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Readability Metrics -->
+    <div class="analysis-card">
+      <div class="card-header">
+        <h3><i class="fas fa-book-reader"></i>Additional Readability Metrics</h3>
+      </div>
+      <div class="metrics-grid-detailed">
+        <div class="metric-item">
+          <div class="metric-label">
+            Average Syllables per Word
+            <app-tooltip [content]="getMetricTooltips().readability_additional['avg_syllables']"></app-tooltip>
+          </div>
+          <div class="metric-value">{{ analysisData.features.readability.average_syllables_per_word.toFixed(2) }}</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-label">
+            Complex Word Ratio
+            <app-tooltip [content]="getMetricTooltips().readability_additional['complex_word_ratio']"></app-tooltip>
+          </div>
+          <div class="metric-value">{{ (analysisData.features.readability.complex_word_ratio * 100).toFixed(1) }}%</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-label">
+            SMOG Index
+            <app-tooltip [content]="getMetricTooltips().readability_additional['smog_index']"></app-tooltip>
+          </div>
+          <div class="metric-value">{{ analysisData.features.readability.smog_index.toFixed(1) }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="analysis-card">
+    <div class="card-header">
+      <h3><i class="fas fa-font"></i>Letter Frequency Distribution</h3>
+    </div>
+    <div class="letter-frequency-container">
+      <div class="letter-frequency-grid">
+        <div class="metric-item" *ngFor="let item of getLetterFrequencies()">
+          <div class="letter-content">
+            <div class="letter">{{ item.letter.toUpperCase() }}</div>
+            <div class="frequency-bar-container">
+              <div class="frequency-bar" [style.width]="(item.frequency * 100) + '%'"></div>
+            </div>
+            <div class="frequency-value">{{ (item.frequency * 100).toFixed(2) }}%</div>
+          </div>
+          <!-- <app-tooltip [content]="'Frequency of letter ' + item.letter.toUpperCase() + ' in the text'"></app-tooltip> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="recommendations">
+    <div class="card-header">
+      <h3><i class="fas fa-lightbulb"></i>Recommendations</h3>
+    </div>
+    <app-recommendations [recommendations]="analysisData.analysis.recommendations">
+    </app-recommendations>
+  </div>
+</div>

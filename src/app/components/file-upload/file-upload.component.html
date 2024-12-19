@@ -1,0 +1,23 @@
+<div
+  class="upload-container"
+  [class.dragging]="isDragging"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+>
+  <div class="upload-content">
+    <div class="upload-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="17 8 12 3 7 8" />
+        <line x1="12" y1="3" x2="12" y2="15" />
+      </svg>
+    </div>
+    <h3>Drag & Drop your PDF here</h3>
+    <p>or</p>
+    <label class="upload-button">
+      Choose File
+      <input type="file" accept=".pdf" (change)="onFileSelected($event)" />
+    </label>
+  </div>
+</div>

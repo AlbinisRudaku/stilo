@@ -1,0 +1,14 @@
+<div class="metrics-container">
+  <h3>Summary Metrics</h3>
+  <div class="metrics-grid">
+    <div class="metric-card" *ngFor="let metric of metricKeys">
+      <div class="metric-header">
+        <span class="metric-title">{{ metric | titlecase }}</span>
+        <div class="score-circle" [style.background]="getScoreColor(metrics[metric].score)">
+          {{ (metrics[metric].score * 100).toFixed(0) }}%
+        </div>
+      </div>
+      <p class="interpretation">{{ metrics[metric].interpretation }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="recommendations-container">
+  <!-- <h3>Recommendations</h3> -->
+  <ul class="recommendations-list">
+    <li *ngFor="let recommendation of recommendations; let i = index" class="recommendation-item">
+      <div class="recommendation-number">{{ i + 1 }}</div>
+      <p>{{ recommendation }}</p>
+    </li>
+  </ul>
+</div>

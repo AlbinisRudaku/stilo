@@ -1,0 +1,40 @@
+<div class="upload-container glass-panel"
+     [class.dragging]="isDragging"
+     [class.error]="errorMessage"
+     (dragover)="onDragOver($event)"
+     (dragleave)="onDragLeave($event)"
+     (drop)="onDrop($event)">
+
+  <div class="upload-content">
+    <div class="upload-icon" [class.pulse]="isDragging">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+    </div>
+    <h3>Drop your PDF here</h3>
+    <p>or</p>
+    <label class="upload-button" [class.disabled]="isUploading">
+      Browse Files
+      <input type="file"
+             accept=".pdf"
+             (change)="onFileSelected($event)"
+             [disabled]="isUploading"
+             hidden>
+    </label>
+    <div class="file-info" *ngIf="selectedFile">
+      <div class="file-preview">
+        <span class="file-icon">📄</span>
+        <span class="file-name">{{ selectedFile.name }}</span>
+      </div>
+      <div class="upload-progress" *ngIf="isUploading">
+        <div class="progress-bar" [style.width.%]="uploadProgress"></div>
+        <span class="progress-text">{{ uploadProgress }}%</span>
+      </div>
+    </div>
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </div>
+</div>

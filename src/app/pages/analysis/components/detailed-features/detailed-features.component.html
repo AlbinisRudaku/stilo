@@ -1,0 +1,79 @@
+<div class="features-container">
+  <h3>Detailed Features Analysis</h3>
+
+  <div class="tabs">
+    <button
+      [class.active]="activeTab === 'lexical'"
+      (click)="setActiveTab('lexical')">
+      Lexical
+    </button>
+    <button
+      [class.active]="activeTab === 'syntactic'"
+      (click)="setActiveTab('syntactic')">
+      Syntactic
+    </button>
+    <button
+      [class.active]="activeTab === 'structural'"
+      (click)="setActiveTab('structural')">
+      Structural
+    </button>
+  </div>
+
+  <div class="tab-content">
+    <div *ngIf="activeTab === 'lexical'" class="lexical-content">
+      <div class="metrics">
+        <div class="metric-item">
+          <span class="label">Unique Words</span>
+          <span class="value">{{ features.lexical.unique_words }}</span>
+        </div>
+        <div class="metric-item">
+          <span class="label">Avg Word Length</span>
+          <span class="value">{{ features.lexical.avg_word_length.toFixed(1) }}</span>
+        </div>
+        <div class="metric-item">
+          <span class="label">Vocabulary Richness</span>
+          <span class="value">{{ features.lexical.vocabulary_richness.toFixed(2) }}</span>
+        </div>
+      </div>
+      <div class="chart-wrapper">
+        <canvas id="wordDistributionChart"></canvas>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'syntactic'" class="syntactic-content">
+      <div class="metrics">
+        <div class="metric-item">
+          <span class="label">Avg Sentence Length</span>
+          <span class="value">{{ features.syntactic.avg_sentence_length.toFixed(1) }}</span>
+        </div>
+        <div class="metric-item">
+          <span class="label">Sentence Complexity</span>
+          <span class="value">{{ features.syntactic.sentence_complexity.toFixed(2) }}</span>
+        </div>
+      </div>
+      <div class="chart-wrapper">
+        <canvas id="punctuationChart"></canvas>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'structural'" class="structural-content">
+      <div class="metrics">
+        <div class="metric-item">
+          <span class="label">Paragraph Count</span>
+          <span class="value">{{ features.structural.paragraph_count }}</span>
+        </div>
+        <div class="metric-item">
+          <span class="label">Avg Paragraph Length</span>
+          <span class="value">{{ features.structural.avg_paragraph_length.toFixed(1) }}</span>
+        </div>
+        <div class="metric-item">
+          <span class="label">Coherence Score</span>
+          <span class="value">{{ features.structural.coherence_score.toFixed(2) }}</span>
+        </div>
+      </div>
+      <div class="chart-wrapper">
+        <canvas id="structuralChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
